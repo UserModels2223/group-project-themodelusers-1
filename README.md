@@ -1,4 +1,4 @@
-# User Models 2021/2022
+# User Models 2022/2023
 
 Materials for adaptive fact learning projects in the User Models (21/22) course.
 
