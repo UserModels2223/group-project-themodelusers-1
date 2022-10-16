@@ -1,6 +1,6 @@
 ---
 API: 2.1
-OpenSesame: 3.3.4a8
+OpenSesame: 3.3.12
 Platform: posix
 ---
 set width 1024
@@ -26,7 +26,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/home/maarten/Documents/PhD/user-models-2020"
+set experiment_path "/Users/leozotos/Documents/Study/Master/2nd Year/1A/User Models/group-project-themodelusers-1"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -63,7 +63,8 @@ define inline_script learning_session_setup
 	var.trial_num = 1
 	
 	# Settings
-	var.session_duration = 10000
+	seconds = 120
+	var.session_duration = seconds*1000   # 2 minutes total 
 	var.feedback_duration = 800
 	var.inter_trial_interval = 200
 	__end__
@@ -171,19 +172,15 @@ define inline_script slimstampen_setup
 	set description "Executes Python code"
 	___run__
 	m = SpacingModel()
-	
+	import pandas as pd
 	# Add some study facts to the model (you could also read them from a CSV file)
-	facts = [Fact(1, "hello", "bonjour"),
-			Fact(2, "dog", "chien"),
-			Fact(3, "cat", "chat"),
-			Fact(4, "computer", "ordinateur"),
-			Fact(5, "house", "maison"),
-			Fact(6, "car", "voiture"),
-			Fact(7, "fish", "poisson"),
-			Fact(8, "bottle", "bouteille")]
-	
+	# Add the csv file to file pool in OpenSesame before use
+	facts = pd.read_csv(exp.get_file('country_capital.csv'))
+	facts = facts.values.tolist()
+	i =0
 	for fact in facts:
-		m.add_fact(fact)
+		m.add_fact(Fact(i,fact[0].lower(),fact[1].lower()))
+		i = i +1
 	__end__
 	___prepare__
 	from __future__ import division
@@ -461,7 +458,6 @@ define sequence trial_sequence
 	run present_trial always
 
 define loop while_there_is_time_left
-	set source_file ""
 	set source table
 	set repeat 1000
 	set order random
@@ -472,3 +468,4 @@ define loop while_there_is_time_left
 	set break_if "[time_up] = yes"
 	setcycle 0 ignore_this_variable 1
 	run trial_sequence
+
