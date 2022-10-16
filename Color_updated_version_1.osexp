@@ -63,7 +63,7 @@ define inline_script learning_session_setup
 	var.trial_num = 1
 	
 	# Settings
-	seconds = 120
+	seconds = 25
 	var.session_duration = seconds*1000   
 	var.feedback_duration = 800
 	var.inter_trial_interval = 200
@@ -157,7 +157,6 @@ define inline_script present_trial
 				#If letter at wrong place but still in word somewhere
 			elif (keyboard_response[i] != answer[i]) and (keyboard_response[i] in answer):
 				color_array.append('orange')
-				
 			#If letter not present in answer at all
 			else:
 				color_array.append('red')
@@ -168,10 +167,6 @@ define inline_script present_trial
 				color_array.append('orange')
 			else:
 				color_array.append('red')
-			
-			
-		
-	
 	
 	print(f"Color array is: {color_array}")
 	
@@ -182,6 +177,7 @@ define inline_script present_trial
 		# my_canvas.text(keyboard_response[i],center=False, x = x_spacing, y = 130, color = color_array[i])
 		my_canvas.text(keyboard_response[i],center=True,x = x_spacing, y = 130, color = color_array[i])
 		x_spacing = x_spacing + 11
+
 	
 	
 	
@@ -526,3 +522,4 @@ define loop while_there_is_time_left
 	setcycle 0 ignore_this_variable 1
 	run trial_sequence
 
+				
