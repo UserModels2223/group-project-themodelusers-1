@@ -1,7 +1,7 @@
 ---
 API: 2.1
-OpenSesame: 3.3.9
-Platform: nt
+OpenSesame: 3.3.12
+Platform: posix
 ---
 set width 1024
 set uniform_coordinates yes
@@ -26,7 +26,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "D:/Documents/School/User Models/group-project-themodelusers-1-master (1)/group-project-themodelusers-1-master"
+set experiment_path "/Users/leozotos/Documents/Study/Master/2nd Year/1A/User Models/group-project-themodelusers-1"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -64,7 +64,7 @@ define inline_script learning_session_setup
 	
 	# Settings
 	seconds = 120
-	var.session_duration = seconds*1000   # 2 minutes total 
+	var.session_duration = seconds*10000   # 2 minutes total 
 	var.feedback_duration = 800
 	var.inter_trial_interval = 200
 	__end__
@@ -175,7 +175,7 @@ define inline_script slimstampen_setup
 	import pandas as pd
 	# Add some study facts to the model (you could also read them from a CSV file)
 	# Add the csv file to file pool in OpenSesame before use
-	facts = pd.read_csv(exp.get_file('country_capital.csv'))
+	facts = pd.read_csv(exp.get_file('capitals_africa.csv'))
 	facts = facts.values.tolist()
 	i =0
 	for fact in facts:
@@ -458,7 +458,6 @@ define sequence trial_sequence
 	run present_trial always
 
 define loop while_there_is_time_left
-	set source_file ""
 	set source table
 	set repeat 1000
 	set order random
