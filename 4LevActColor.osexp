@@ -1,7 +1,7 @@
 ---
 API: 2.1
-OpenSesame: 3.3.12
-Platform: posix
+OpenSesame: 3.3.9
+Platform: nt
 ---
 set width 1024
 set uniform_coordinates yes
@@ -26,7 +26,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/Users/leozotos/Documents/Study/Master/2nd Year/1A/User Models/group-project-themodelusers-1"
+set experiment_path "D:/Documents/School/User Models/group-project-themodelusers-1-master-new/group-project-themodelusers-1-master"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -179,6 +179,7 @@ define inline_script slimstampen_setup
 	# Add some study facts to the model (you could also read them from a CSV file)
 	# Add the csv file to file pool in OpenSesame before use
 	facts = pd.read_csv(exp.get_file('capitals_africa.csv'))
+	facts = facts.sample(frac=1).reset_index(drop=True)
 	facts = facts.values.tolist()
 	i =0
 	for fact in facts:
