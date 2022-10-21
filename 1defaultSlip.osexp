@@ -64,7 +64,7 @@ define inline_script learning_session_setup
 	
 	# Settings
 	seconds = 120
-	var.session_duration = seconds*1000   # 2 minutes total 
+	var.session_duration = seconds*10000   # 2 minutes total 
 	var.feedback_duration = 800
 	var.inter_trial_interval = 200
 	__end__
@@ -175,7 +175,7 @@ define inline_script slimstampen_setup
 	import pandas as pd
 	# Add some study facts to the model (you could also read them from a CSV file)
 	# Add the csv file to file pool in OpenSesame before use
-	facts = pd.read_csv(exp.get_file('country_capital.csv'))
+	facts = pd.read_csv(exp.get_file('capitals_africa.csv'))
 	facts = facts.values.tolist()
 	i =0
 	for fact in facts:
