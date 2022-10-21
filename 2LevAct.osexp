@@ -1,7 +1,7 @@
 ---
 API: 2.1
-OpenSesame: 3.3.12
-Platform: posix
+OpenSesame: 3.3.9
+Platform: nt
 ---
 set width 1024
 set uniform_coordinates yes
@@ -26,7 +26,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/Users/leozotos/Documents/Study/Master/2nd Year/1A/User Models/group-project-themodelusers-1"
+set experiment_path "D:/Documents/School/User Models/group-project-themodelusers-1-master (1)/group-project-themodelusers-1-master"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -130,9 +130,13 @@ define inline_script present_trial
 	
 	# Check if the response is correct
 	correct = keyboard_response == answer
+	
+	total_length = max(len(keyboard_response),len(answer))
+	from Levenshtein import distance as levenshtein_distance
+	fDist = float(total_length - levenshtein_distance(keyboard_response,answer))
 		
 	# Log response
-	response = Response(next_fact, trial_start_time, rt, correct)
+	response = Response(next_fact, trial_start_time, rt, fDist)
 	m.register_response(response) 
 	
 	# Show feedback
