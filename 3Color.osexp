@@ -1,7 +1,7 @@
 ---
 API: 2.1
 OpenSesame: 3.3.12
-Platform: nt
+Platform: posix
 ---
 set width 1024
 set uniform_coordinates yes
@@ -26,7 +26,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "D:/College/User_Models/Default_experiment/user-models-2020"
+set experiment_path "/Users/leozotos/Documents/Study/Master/2nd Year/1A/User Models/group-project-themodelusers-1"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -48,8 +48,8 @@ define sequence experiment
 define sketchpad instructions
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="You will be presented with a Country (top) and its Capital (bottom).<br />Type the capital you see and press Enter.<br /><br /><br />Color Coding:<br /><br />1) Green: All letters are in the correct place.<br />2) Orange: Letter is present in the word but is in the wrong position.<br />3) Red: Letter is not present in the word." x=0.0 y=64.0 z_index=0
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="" x=0.0 y=-96.0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="You will be presented with a Country (top) and its Capital (bottom).<br />Type the capital you see and press Enter.<br /><br /><br />Color Coding:<br /><br />1) Green: All letters are in the correct place.<br />2) Orange: Letter is present in the word but is in the wrong position.<br />3) Red: Letter is not present in the word." x=0 y=64 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="" x=0 y=-96 z_index=0
 
 define inline_script learning_session_setup
 	set description "Executes Python code"
@@ -251,7 +251,7 @@ define inline_script slimstampen_setup
 	import pandas as pd
 	# Add some study facts to the model (you could also read them from a CSV file)
 	# Add the csv file to file pool in OpenSesame before use
-	facts = pd.read_csv(exp.get_file('country_capital.csv'))
+	facts = pd.read_csv(exp.get_file('capitals_africa.csv'))
 	facts = facts.values.tolist()
 	i =0
 	for fact in facts:
