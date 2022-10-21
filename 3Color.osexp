@@ -1,7 +1,7 @@
 ---
 API: 2.1
 OpenSesame: 3.3.12
-Platform: posix
+Platform: nt
 ---
 set width 1024
 set uniform_coordinates yes
@@ -26,7 +26,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/Users/leozotos/Documents/Study/Master/2nd Year/1A/User Models/group-project-themodelusers-1"
+set experiment_path "D:/College/User_Models/Default_experiment/user-models-2020"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -48,7 +48,8 @@ define sequence experiment
 define sketchpad instructions
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Instructions go here. Press any key to begin." x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="You will be presented with a Country (top) and its Capital (bottom).<br />Type the capital you see and press Enter.<br /><br /><br />Color Coding:<br /><br />1) Green: All letters are in the correct place.<br />2) Orange: Letter is present in the word but is in the wrong position.<br />3) Red: Letter is not present in the word." x=0.0 y=64.0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="" x=0.0 y=-96.0 z_index=0
 
 define inline_script learning_session_setup
 	set description "Executes Python code"
@@ -63,7 +64,7 @@ define inline_script learning_session_setup
 	var.trial_num = 1
 	
 	# Settings
-	seconds = 25
+	seconds = 50
 	var.session_duration = seconds*1000   
 	var.feedback_duration = 800
 	var.inter_trial_interval = 200
@@ -73,6 +74,7 @@ define inline_script learning_session_setup
 define inline_script present_trial
 	set description "Executes Python code"
 	___run__
+	import math
 	trial_start_time = clock.time()
 	
 	# Get next fact from the model
@@ -80,11 +82,17 @@ define inline_script present_trial
 	prompt = next_fact.question
 	answer = next_fact.answer
 	
+	prompt_font_size = 40
+	answer_font_size = 25
+	prompt_height = -20
+	answer_height = 30
+	
+	
 	# Show prompt
 	my_canvas = Canvas()
-	my_canvas.text(prompt, font_size = 30)
+	my_canvas.text(prompt.capitalize(), font_size = prompt_font_size, y = prompt_height)
 	if new:
-		my_canvas.text(answer, y = 50, font_size = 20)
+		my_canvas.text(answer, y = answer_height, font_size = answer_font_size)
 	my_canvas.prepare()
 	my_canvas.show()
 	
@@ -120,10 +128,10 @@ define inline_script present_trial
 	
 		# Update what's on screen'
 		my_canvas.clear()
-		my_canvas.text(prompt, font_size = 30)
+		my_canvas.text(prompt.capitalize(), font_size = prompt_font_size, y = prompt_height)
 		if new:
-			my_canvas.text(answer, y = 50, font_size = 20)
-		my_canvas.text(keyboard_response, y = 100)
+			my_canvas.text(answer, y = answer_height, font_size = answer_font_size)
+		my_canvas.text(keyboard_response, y = 100, font_size = answer_font_size)
 		my_canvas.prepare()
 		my_canvas.show()
 	
@@ -181,12 +189,17 @@ define inline_script present_trial
 			keyboard_response_copy = keyboard_response_copy + '?'
 		color_array.append('red')
 	#Display feedback color
-	x_spacing = 11
-	x_spacing = x_spacing - len(keyboard_response)*5.5 - 5.5
+	x_spacing = 0
+	print(len(answer))
+	# x_spacing = x_spacing - len(keyboard_response)*5.5 - 5.5
+	if len(answer)%2 != 0:
+		x_spacing = x_spacing - math.floor(len(answer)/2)*15
+	else:
+		x_spacing = x_spacing - (len(answer)/2)*15 + 7.5
 	for i in range(len(keyboard_response_copy)):
 		# my_canvas.text(keyboard_response[i],center=False, x = x_spacing, y = 130, color = color_array[i])
-		my_canvas.text(keyboard_response_copy[i],center=True,x = x_spacing, y = 130, color = color_array[i])
-		x_spacing = x_spacing + 11
+		my_canvas.text(keyboard_response_copy[i],center=True,x = x_spacing, y = 135, color = color_array[i],font_size = answer_font_size)
+		x_spacing = x_spacing + 15
 	
 	
 	
