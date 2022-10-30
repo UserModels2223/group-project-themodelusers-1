@@ -63,8 +63,8 @@ define inline_script learning_session_setup
 	var.trial_num = 1
 	
 	# Settings
-	seconds = 120
-	var.session_duration = seconds*10000   # 2 minutes total 
+	seconds = 1200
+	var.session_duration = seconds*1000  # 20 minutes total 
 	var.feedback_duration = 800
 	var.inter_trial_interval = 200
 	__end__
