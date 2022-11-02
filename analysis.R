@@ -1,5 +1,6 @@
 library(dplyr)
 library(lme4)
+library(ggplot2)
 
 dat <- read.csv(file.choose())
 
@@ -20,6 +21,21 @@ learnedPerSubject <- learned %>% group_by(condition, subject) %>%
   summarise(countLearned=n(),.groups = 'drop') %>% 
   as.data.frame()
 
+#Basic visualisation of data
+
+customDataForBoxplot <- learnedPerSubject
+customDataForBoxplot$condition <- as.character(customDataForBoxplot$condition)
+customDataForBoxplot$condition[customDataForBoxplot$condition == '1'] <- 'Default'
+customDataForBoxplot$condition[customDataForBoxplot$condition == '2'] <- 'LD Model'
+customDataForBoxplot$condition[customDataForBoxplot$condition == '3'] <- 'Col. Feedback'
+customDataForBoxplot$condition[customDataForBoxplot$condition == '4'] <- 'LD Model and\nCol. Feedback'
+
+boxplot <- ggplot(customDataForBoxplot, aes(x=condition, y=countLearned)) + 
+  geom_boxplot() +
+  labs(title = "Number of Learned Facts per Condition", x="Condition", y="Number of Learnt Facts") +
+  theme(axis.text=element_text(size=11))
+  
+boxplot
 
 ###Statistical Analysis
 learnedPerSubject$condition <- as.factor(learnedPerSubject$condition)
@@ -37,5 +53,3 @@ linearModel2 <- lmer(countLearned ~ (1|condition), data=learnedPerSubject, REML=
 anova(linearModel1, linearModel2)
 
 summary(linearModel2)
-
-
