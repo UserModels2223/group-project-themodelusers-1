@@ -29,11 +29,14 @@ customDataForBoxplot$condition[customDataForBoxplot$condition == '1'] <- 'Defaul
 customDataForBoxplot$condition[customDataForBoxplot$condition == '2'] <- 'LD Model'
 customDataForBoxplot$condition[customDataForBoxplot$condition == '3'] <- 'Col. Feedback'
 customDataForBoxplot$condition[customDataForBoxplot$condition == '4'] <- 'LD Model and\nCol. Feedback'
+customDataForBoxplot$condition <- factor(customDataForBoxplot$condition , 
+                                         levels=c("Default", "LD Model", "Col. Feedback",
+                                                  "LD Model and\nCol. Feedback"))
 
 boxplot <- ggplot(customDataForBoxplot, aes(x=condition, y=countLearned)) + 
   geom_boxplot() +
   labs(title = "Number of Learned Facts per Condition", x="Condition", y="Number of Learnt Facts") +
-  theme(axis.text=element_text(size=11))
+  theme_grey(base_size = 22)
   
 boxplot
 
