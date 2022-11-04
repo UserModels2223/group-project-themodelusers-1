@@ -8,9 +8,8 @@ dat <- read.csv(file.choose())
 # unique(dat$fact_id)
 
 #Threshold for items to be considered as learned
-threshold = 0.5
-nrow(subset(dat, alpha>threshold))
-learned <- subset(dat, alpha>threshold)
+threshold = 0.25
+learned <- subset(dat, alpha<threshold)
 
 #Keep unique values (each fact is only counts as learned once)
 learned = distinct(learned, subject,question, .keep_all= TRUE)
