@@ -1,6 +1,6 @@
 # User Models 2022/2023
 
-Materials for adaptive fact learning projects in the User Models (21/22) course.
+Materials for adaptive fact learning projects in the User Models (22/23) course.
 
 
 #### Requirements
