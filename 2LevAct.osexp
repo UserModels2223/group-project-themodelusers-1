@@ -134,7 +134,8 @@ define inline_script present_trial
 	
 	total_length = max(len(keyboard_response),len(answer))
 	from Levenshtein import distance as levenshtein_distance
-	fDist = float(total_length - levenshtein_distance(keyboard_response,answer))
+	fDist = float(levenshtein_distance(keyboard_response,answer)/total_length)
+	
 		
 	# Log response
 	response = Response(next_fact, trial_start_time, rt, fDist)
@@ -423,7 +424,8 @@ define inline_script slimstampen_setup
 	        """
 	        Cut off extremely long responses to keep the reaction time within reasonable bounds
 	        """
-	        rt = response.rt if response.correct else 60000
+			wrong_answer = (1-fDist)*6000
+	        rt = response.rt if response.correct else wrong_answer
 	        max_rt = self.get_max_reaction_time_for_fact(response.fact)
 	        return(min(rt, max_rt))
 	
