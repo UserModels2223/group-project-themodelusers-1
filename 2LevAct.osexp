@@ -424,7 +424,7 @@ define inline_script slimstampen_setup
 	        """
 	        Cut off extremely long responses to keep the reaction time within reasonable bounds
 	        """
-			wrong_answer = (1-fDist)*6000
+	        wrong_answer = (1-fDist)*6000
 	        rt = response.rt if response.correct else wrong_answer
 	        max_rt = self.get_max_reaction_time_for_fact(response.fact)
 	        return(min(rt, max_rt))
